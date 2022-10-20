@@ -8,18 +8,20 @@ import {
   Stack,
   Input,
   Text,
+  Button,
   IconButton,
   HStack,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  CloseButton,
+  ScaleFade,
 } from "@chakra-ui/react";
 
 import { useAlert } from "../hooks/useAlert";
 
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const Main: React.FC = () => {
   const [todoList, setTodoList] = useState<string[]>([]);
@@ -49,6 +51,11 @@ const Main: React.FC = () => {
     notifie("Task", `Removed ${todoList[index]}.`, "success");
   };
 
+  const removeAll = () => {
+    setTodoList([]);
+    notifie("Task", `Removed All Tasks.`, "success");
+  };
+
   return (
     <Container minH="100vh" textAlign="center" paddingTop="10%">
       <Text fontSize="5xl" fontWeight="bold">
@@ -73,24 +80,25 @@ const Main: React.FC = () => {
         </form>
         {todoList.length > 0 && (
           <Stack direction="column" spacing="1rem" paddingBlock="1rem">
-            {todoList.reverse().map((item, i) => (
+            {todoList.map((item, i) => (
               <Box key={i}>
-                {i === 0 && <Divider />}
                 <Flex justify="space-between" align="center" p=".5rem">
                   <Text>{item}</Text>
                   <HStack>
-                    <IconButton
-                      aria-label="remove task"
-                      icon={<XMarkIcon />}
-                      p=".3rem"
-                      size="sm"
-                      onClick={() => handleRemove(i)}
-                    />
+                    <CloseButton onClick={() => handleRemove(i)} />
                   </HStack>
                 </Flex>
                 <Divider />
               </Box>
             ))}
+            <Button
+              bg="red.600"
+              color="white"
+              _hover={{ background: "red.700" }}
+              onClick={removeAll}
+            >
+              delete all
+            </Button>
           </Stack>
         )}
       </Flex>

@@ -1,6 +1,8 @@
-import { Button, Box, useColorMode } from "@chakra-ui/react";
+import { IconButton, useColorMode } from "@chakra-ui/react";
 
 import Main from "./components/Main";
+
+import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 
 const App: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -8,14 +10,16 @@ const App: React.FC = () => {
   return (
     <>
       <Main />
-      <Button
+      <IconButton
+        aria-label="toggle colormode"
+        icon={colorMode === "light" ? <SunIcon /> : <MoonIcon />}
         position="absolute"
-        bottom=".5rem"
+        top=".5rem"
         right=".5rem"
+        p=".4rem"
         onClick={toggleColorMode}
-      >
-        toggle color mode
-      </Button>
+        variant="ghost"
+      />
     </>
   );
 };
