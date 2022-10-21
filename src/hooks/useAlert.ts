@@ -1,6 +1,6 @@
-import { useState, useId } from "react";
+import { useState } from "react";
 
-interface IAlert {
+export interface IAlert {
   id: number;
   isVisible: boolean;
   title: string;
@@ -22,7 +22,7 @@ export const useAlert = () => {
     description: string,
     status: "success" | "error"
   ) => {
-    const id = Math.floor(Math.random() * 1000);
+    const id = new Date().getTime();
 
     setAlerts((prev) => [
       ...prev,
