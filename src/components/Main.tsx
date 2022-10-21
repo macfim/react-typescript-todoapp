@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Flex,
@@ -34,7 +34,7 @@ const Main: React.FC = () => {
     if (!newTodo) return notifie("Form", "Should Not Be Empty.", "error");
 
     setTodoList((prev) => [...prev, newTodo]);
-    notifie("Task", `Added ${newTodo}.`, "success");
+    notifie("Task", `Added \"${newTodo}\".`, "success");
     setNewTodo("");
   };
 
@@ -44,12 +44,12 @@ const Main: React.FC = () => {
 
   const handleRemove = (index: number) => {
     setTodoList((prev) => prev.filter((_, i) => i !== index));
-    notifie("Task", `Removed ${todoList[index]}.`, "success");
+    notifie("Task", `Removed \"${todoList[index]}\".`, "success");
   };
 
   const removeAll = () => {
     setTodoList([]);
-    notifie("Task", `Removed All Tasks.`, "success");
+    notifie("Task", "Removed All Tasks.", "success");
   };
 
   return (
@@ -81,9 +81,7 @@ const Main: React.FC = () => {
               <Box key={i}>
                 <Flex justify="space-between" align="center" p=".5rem">
                   <Text>{item}</Text>
-                  <HStack>
-                    <CloseButton onClick={() => handleRemove(i)} />
-                  </HStack>
+                  <CloseButton onClick={() => handleRemove(i)} />
                 </Flex>
                 <Divider />
               </Box>
