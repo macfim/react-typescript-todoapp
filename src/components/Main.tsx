@@ -13,15 +13,17 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { useAlert } from "../hooks/useAlert";
 
-import { PlusIcon } from "@heroicons/react/24/outline";
 import AlertItem from "./AlertItem";
+import LiveTime from "./LiveTime";
 
 interface ITodo {
   id: number;
   body: string;
+  createdAt: Date;
 }
 
 const Main: React.FC = () => {
@@ -35,9 +37,12 @@ const Main: React.FC = () => {
 
     if (!newTodo) return notifie("Form", "Should Not Be Empty.", "error");
 
+    if (todoList.find((item) => item.body === newTodo))
+      return notifie("Task", `Task \"${newTodo}\" already exists`, "error");
+
     setTodoList((prev) => [
       ...prev,
-      { id: new Date().getTime(), body: newTodo },
+      { id: new Date().getTime(), body: newTodo, createdAt: new Date() },
     ]);
     notifie("Task", `Added \"${newTodo}\".`, "success");
     setNewTodo("");
@@ -66,6 +71,7 @@ const Main: React.FC = () => {
       <Text fontSize="5xl" fontWeight="bold">
         Todo App
       </Text>
+      <LiveTime />
       <Flex minW="10rem" p="1rem" direction="column">
         <form onSubmit={handleSubmit}>
           <HStack>
@@ -111,6 +117,15 @@ const Main: React.FC = () => {
                     >
                       <Flex justify="space-between" align="center" p=".5rem">
                         <Text>{item.body}</Text>
+                        <Text
+                          fontSize="xs"
+                          color="gray.500"
+                          ml="auto"
+                          mr=".5rem"
+                          alignSelf="end"
+                        >
+                          {item.createdAt.toLocaleTimeString()}
+                        </Text>
                         <CloseButton onClick={() => handleRemove(item.id)} />
                       </Flex>
                       <Divider />
