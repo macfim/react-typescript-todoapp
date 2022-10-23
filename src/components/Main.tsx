@@ -15,7 +15,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-import { useAlert } from "../hooks/useAlert";
+import { useAlert, EStatus } from "../hooks/useAlert";
 
 import AlertItem from "./AlertItem";
 import LiveTime from "./LiveTime";
@@ -35,16 +35,16 @@ const Main: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!newTodo) return notifie("Form", "Should Not Be Empty.", "error");
+    if (!newTodo) return notifie("Form", "Should Not Be Empty.", EStatus.error);
 
     if (todoList.find((item) => item.body === newTodo))
-      return notifie("Task", `Task \"${newTodo}\" already exists`, "error");
+      return notifie("Task", `Task \"${newTodo}\" already exists`, EStatus.error);
 
     setTodoList((prev) => [
       ...prev,
       { id: new Date().getTime(), body: newTodo, createdAt: new Date() },
     ]);
-    notifie("Task", `Added \"${newTodo}\".`, "success");
+    notifie("Task", `Added \"${newTodo}\".`, EStatus.success);
     setNewTodo("");
   };
 
@@ -57,13 +57,13 @@ const Main: React.FC = () => {
     notifie(
       "Task",
       `Removed \"${todoList.find((item) => item.id === id)?.body}\".`,
-      "success"
+      EStatus.success
     );
   };
 
   const removeAll = () => {
     setTodoList([]);
-    notifie("Task", "Removed All Tasks.", "success");
+    notifie("Task", "Removed All Tasks.", EStatus.success);
   };
 
   return (
