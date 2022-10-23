@@ -97,22 +97,25 @@ const Main: React.FC = () => {
               paddingBlock="1rem"
             >
               <AnimatePresence>
-                {todoList.map((item) => (
-                  <Box
-                    key={item.id}
-                    as={motion.div}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    layout
-                  >
-                    <Flex justify="space-between" align="center" p=".5rem">
-                      <Text>{item.body}</Text>
-                      <CloseButton onClick={() => handleRemove(item.id)} />
-                    </Flex>
-                    <Divider />
-                  </Box>
-                ))}
+                {todoList
+                  .slice(0)
+                  .reverse()
+                  .map((item) => (
+                    <Box
+                      key={item.id}
+                      as={motion.div}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      layout
+                    >
+                      <Flex justify="space-between" align="center" p=".5rem">
+                        <Text>{item.body}</Text>
+                        <CloseButton onClick={() => handleRemove(item.id)} />
+                      </Flex>
+                      <Divider />
+                    </Box>
+                  ))}
               </AnimatePresence>
               <Button
                 colorScheme="red"
